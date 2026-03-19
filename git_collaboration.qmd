@@ -1,0 +1,260 @@
+---
+title: "Collaborating with Git and GitHub: A Beginner's Guide"
+subtitle: "Using the Fork, Branch, and Pull Request Workflow"
+author: "Your Name Here"   # replace with your name
+date: "today"
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    number-sections: true
+---
+
+## Introduction
+
+Welcome! This document will walk you through the basics of collaborating on a project using **Git** and **GitHub**. These tools are widely used in data science, software development, and research to track changes and work together on shared projects.
+
+By the end of this guide, you will know how to:
+
+- **Fork** a repository to get your own copy
+- **Clone** the repository to your computer
+- Create a **branch** to safely make changes
+- **Commit** and **push** your changes
+- Open a **Pull Request** to propose your changes to the original project
+
+::: {.callout-note}
+## What is Git vs. GitHub?
+**Git** is a version control system that runs on your computer. It tracks every change you make to your files over time.
+
+**GitHub** is a website that hosts your Git repositories online. It also provides tools for collaborating with others.
+:::
+
+---
+
+## Key Concepts
+
+Before we dive in, here are a few important terms:
+
+| Term | What It Means |
+|------|---------------|
+| **Repository (repo)** | A folder containing your project files and their complete history |
+| **Fork** | Your own personal copy of someone else's repository on GitHub |
+| **Clone** | Downloading a copy of a repository to your local computer |
+| **Branch** | A parallel version of the code where you can make changes safely |
+| **Commit** | A saved snapshot of your changes with a descriptive message |
+| **Push** | Uploading your local commits to GitHub |
+| **Pull Request (PR)** | A request for the original project owner to review and merge your changes |
+
+---
+
+## Step 1: Fork the Repository
+
+A **fork** creates your own personal copy of someone else's repository on GitHub. This lets you freely experiment without affecting the original project.
+
+**How to fork:**
+
+1. Go to the repository page on GitHub (for example: `https://github.com/higgi13425/soap_note`)
+2. Click the **Fork** button in the upper-right corner of the page
+3. GitHub will create a copy of the repository under your own account (e.g., `https://github.com/YOUR-USERNAME/soap_note`)
+
+![Click the Fork button to copy the repository to your account](https://docs.github.com/assets/cb-79331/mw-1440/images/help/repository/fork-button.webp){fig-alt="Screenshot showing the Fork button on a GitHub repository page"}
+
+You now have your own independent copy of the project!
+
+---
+
+## Step 2: Clone Your Fork to Your Computer
+
+**Cloning** downloads the repository from GitHub to your local machine so you can edit files.
+
+In RStudio, you can do this easily:
+
+1. Click **File → New Project → Version Control → Git**
+2. Paste the URL of **your fork** (not the original) into the "Repository URL" field
+3. Choose a folder on your computer and click **Create Project**
+
+Or, from the terminal:
+
+```bash
+git clone https://github.com/YOUR-USERNAME/soap_note.git
+cd soap_note
+```
+
+::: {.callout-tip}
+Always clone **your fork**, not the original repository. That way your changes stay in your own copy until you're ready to share them.
+:::
+
+---
+
+## Step 3: Create a Branch
+
+A **branch** is like a safe workspace where you can make changes without affecting the main version of the code. It is good practice to always work on a new branch rather than directly on `main`.
+
+From the terminal, create and switch to a new branch:
+
+```bash
+git checkout -b my-new-feature
+```
+
+This creates a branch called `my-new-feature` and switches to it right away. You can name your branch anything descriptive — for example, `add-plan-section` or `fix-typo`.
+
+To check which branch you are on:
+
+```bash
+git branch
+```
+
+The branch with `*` next to it is your current branch.
+
+::: {.callout-note}
+In RStudio, you can create and switch branches using the **Git pane** in the upper-right panel. Click the branch name dropdown and select **New Branch**.
+:::
+
+---
+
+## Step 4: Make Your Changes
+
+Now you can open files in the repository and edit them. For example, you might add text to the SOAP note, fix a typo, or add a new section.
+
+After editing a file, save it as you normally would.
+
+---
+
+## Step 5: Stage and Commit Your Changes
+
+A **commit** saves a snapshot of your changes with a message describing what you did. Before committing, you must **stage** the files you want to include.
+
+From the terminal:
+
+```bash
+# Stage your changes (add the file to the commit)
+git add filename.qmd
+
+# Or stage all changed files at once
+git add .
+
+# Commit with a descriptive message
+git commit -m "Add assessment section to SOAP note"
+```
+
+In RStudio:
+
+1. In the **Git pane**, check the box next to each file you want to stage
+2. Click **Commit**
+3. Write a short, descriptive commit message
+4. Click **Commit** again
+
+::: {.callout-tip}
+## Writing Good Commit Messages
+A good commit message briefly explains *what* you changed and *why*. 
+
+✅ Good: `"Add objective section with vital signs"`  
+❌ Less helpful: `"changes"` or `"stuff"`
+:::
+
+---
+
+## Step 6: Push Your Changes to GitHub
+
+**Pushing** uploads your local commits to your fork on GitHub.
+
+```bash
+git push origin my-new-feature
+```
+
+Here, `origin` refers to your fork on GitHub, and `my-new-feature` is the name of your branch.
+
+In RStudio, click the green **Push** arrow in the Git pane.
+
+After pushing, go to your fork on GitHub — you should see your new branch and a prompt to open a Pull Request.
+
+---
+
+## Step 7: Open a Pull Request
+
+A **Pull Request (PR)** is how you propose your changes to the owner of the original repository. It lets them review your changes, leave comments, and ultimately merge your work into the main project.
+
+**How to open a Pull Request:**
+
+1. Go to your fork on GitHub
+2. You should see a yellow banner saying *"Compare & pull request"* — click it
+3. Make sure the **base repository** is the original (`higgi13425/soap_note`) and the **base branch** is `main`
+4. Make sure the **head repository** is your fork and the **compare branch** is `my-new-feature`
+5. Write a clear title and description explaining what your changes do and why
+6. Click **Create Pull Request**
+
+The repository owner will be notified and can review your changes, suggest edits, and eventually merge them.
+
+::: {.callout-note}
+## What Happens After You Submit a PR?
+- The owner may **merge** your PR (your changes are added to the main project 🎉)
+- The owner may **request changes** (they ask you to fix or improve something before merging)
+- The owner may **close** the PR (your changes are not accepted this time)
+
+If changes are requested, simply make the edits on the same branch, commit, and push — the PR will update automatically.
+:::
+
+---
+
+## The Full Workflow at a Glance
+
+```
+Original Repo (higgi13425/soap_note)
+        │
+        │  Fork
+        ▼
+Your Fork (YOUR-USERNAME/soap_note)  ←── Push
+        │
+        │  Clone
+        ▼
+  Your Computer
+        │
+        │  Create Branch → Edit Files → Commit
+        ▼
+  Your Branch (my-new-feature)
+        │
+        │  Pull Request
+        ▼
+Original Repo (review & merge)
+```
+
+---
+
+## Summary
+
+Here is a quick recap of each step:
+
+1. **Fork** the repository on GitHub to create your own copy
+2. **Clone** your fork to your local computer
+3. **Create a branch** to isolate your changes
+4. **Edit** the files you want to change
+5. **Stage and commit** your changes with a descriptive message
+6. **Push** your branch back to your fork on GitHub
+7. **Open a Pull Request** to propose your changes to the original repository
+
+That's it! With practice, this workflow will become second nature. It is the same process used by millions of developers and data scientists around the world to collaborate on projects of all sizes.
+
+---
+
+## Practice: Try It Yourself
+
+Now it's your turn! Try the following exercise using this repository (`higgi13425/soap_note`):
+
+1. Fork this repository to your own GitHub account
+2. Clone your fork to your computer
+3. Create a branch called `add-my-note`
+4. Open the SOAP note file and add something to the **Subjective** section
+5. Commit your change with the message: `"Add subjective note"`
+6. Push your branch to GitHub
+7. Open a Pull Request back to the original repository
+
+Good luck and happy collaborating! 🎉
+
+---
+
+## Additional Resources
+
+- [Happy Git with R](https://happygitwithr.com/) — an excellent guide for using Git with R and RStudio
+- [GitHub Docs: Fork a repo](https://docs.github.com/en/get-started/quickstart/fork-a-repo)
+- [GitHub Docs: Creating a pull request](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request)
+- [Git cheat sheet (PDF)](https://education.github.com/git-cheat-sheet-education.pdf)
