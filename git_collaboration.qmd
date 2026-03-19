@@ -1,7 +1,7 @@
 ---
 title: "Collaborating with Git and GitHub: A Beginner's Guide"
 subtitle: "Using the Fork, Branch, and Pull Request Workflow"
-author: "Your Name Here"   # replace with your name
+author: "Peter Higgins"   
 date: "today"
 format:
   html:

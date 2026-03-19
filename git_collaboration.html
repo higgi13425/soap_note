@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.29">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Your Name Here">
+<meta name="dcterms.date" content="2026-03-19">
+
+<title>Collaborating with Git and GitHub: A Beginner’s Guide</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="git_collaboration_files/libs/clipboard/clipboard.min.js"></script>
+<script src="git_collaboration_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="git_collaboration_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="git_collaboration_files/libs/quarto-html/popper.min.js"></script>
+<script src="git_collaboration_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="git_collaboration_files/libs/quarto-html/anchor.min.js"></script>
+<link href="git_collaboration_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="git_collaboration_files/libs/quarto-html/quarto-syntax-highlighting-0815c480559380816a4d1ea211a47e91.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="git_collaboration_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="git_collaboration_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="git_collaboration_files/libs/bootstrap/bootstrap-81267100e462c21b3d6c0d5bf76a3417.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body class="quarto-light">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="header-section-number">1</span> Introduction</a></li>
+  <li><a href="#key-concepts" id="toc-key-concepts" class="nav-link" data-scroll-target="#key-concepts"><span class="header-section-number">2</span> Key Concepts</a></li>
+  <li><a href="#step-1-fork-the-repository" id="toc-step-1-fork-the-repository" class="nav-link" data-scroll-target="#step-1-fork-the-repository"><span class="header-section-number">3</span> Step 1: Fork the Repository</a></li>
+  <li><a href="#step-2-clone-your-fork-to-your-computer" id="toc-step-2-clone-your-fork-to-your-computer" class="nav-link" data-scroll-target="#step-2-clone-your-fork-to-your-computer"><span class="header-section-number">4</span> Step 2: Clone Your Fork to Your Computer</a></li>
+  <li><a href="#step-3-create-a-branch" id="toc-step-3-create-a-branch" class="nav-link" data-scroll-target="#step-3-create-a-branch"><span class="header-section-number">5</span> Step 3: Create a Branch</a></li>
+  <li><a href="#step-4-make-your-changes" id="toc-step-4-make-your-changes" class="nav-link" data-scroll-target="#step-4-make-your-changes"><span class="header-section-number">6</span> Step 4: Make Your Changes</a></li>
+  <li><a href="#step-5-stage-and-commit-your-changes" id="toc-step-5-stage-and-commit-your-changes" class="nav-link" data-scroll-target="#step-5-stage-and-commit-your-changes"><span class="header-section-number">7</span> Step 5: Stage and Commit Your Changes</a></li>
+  <li><a href="#step-6-push-your-changes-to-github" id="toc-step-6-push-your-changes-to-github" class="nav-link" data-scroll-target="#step-6-push-your-changes-to-github"><span class="header-section-number">8</span> Step 6: Push Your Changes to GitHub</a></li>
+  <li><a href="#step-7-open-a-pull-request" id="toc-step-7-open-a-pull-request" class="nav-link" data-scroll-target="#step-7-open-a-pull-request"><span class="header-section-number">9</span> Step 7: Open a Pull Request</a></li>
+  <li><a href="#the-full-workflow-at-a-glance" id="toc-the-full-workflow-at-a-glance" class="nav-link" data-scroll-target="#the-full-workflow-at-a-glance"><span class="header-section-number">10</span> The Full Workflow at a Glance</a></li>
+  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">11</span> Summary</a></li>
+  <li><a href="#practice-try-it-yourself" id="toc-practice-try-it-yourself" class="nav-link" data-scroll-target="#practice-try-it-yourself"><span class="header-section-number">12</span> Practice: Try It Yourself</a></li>
+  <li><a href="#additional-resources" id="toc-additional-resources" class="nav-link" data-scroll-target="#additional-resources"><span class="header-section-number">13</span> Additional Resources</a></li>
+  </ul>
+</nav>
+</div>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Collaborating with Git and GitHub: A Beginner’s Guide</h1>
+<p class="subtitle lead">Using the Fork, Branch, and Pull Request Workflow</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Your Name Here </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">March 19, 2026</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="introduction" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="introduction"><span class="header-section-number">1</span> Introduction</h2>
+<p>Welcome! This document will walk you through the basics of collaborating on a project using <strong>Git</strong> and <strong>GitHub</strong>. These tools are widely used in data science, software development, and research to track changes and work together on shared projects.</p>
+<p>By the end of this guide, you will know how to:</p>
+<ul>
+<li><strong>Fork</strong> a repository to get your own copy</li>
+<li><strong>Clone</strong> the repository to your computer</li>
+<li>Create a <strong>branch</strong> to safely make changes</li>
+<li><strong>Commit</strong> and <strong>push</strong> your changes</li>
+<li>Open a <strong>Pull Request</strong> to propose your changes to the original project</li>
+</ul>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+What is Git vs.&nbsp;GitHub?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Git</strong> is a version control system that runs on your computer. It tracks every change you make to your files over time.</p>
+<p><strong>GitHub</strong> is a website that hosts your Git repositories online. It also provides tools for collaborating with others.</p>
+</div>
+</div>
+<hr>
+</section>
+<section id="key-concepts" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="key-concepts"><span class="header-section-number">2</span> Key Concepts</h2>
+<p>Before we dive in, here are a few important terms:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 28%">
+<col style="width: 71%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Term</th>
+<th>What It Means</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Repository (repo)</strong></td>
+<td>A folder containing your project files and their complete history</td>
+</tr>
+<tr class="even">
+<td><strong>Fork</strong></td>
+<td>Your own personal copy of someone else’s repository on GitHub</td>
+</tr>
+<tr class="odd">
+<td><strong>Clone</strong></td>
+<td>Downloading a copy of a repository to your local computer</td>
+</tr>
+<tr class="even">
+<td><strong>Branch</strong></td>
+<td>A parallel version of the code where you can make changes safely</td>
+</tr>
+<tr class="odd">
+<td><strong>Commit</strong></td>
+<td>A saved snapshot of your changes with a descriptive message</td>
+</tr>
+<tr class="even">
+<td><strong>Push</strong></td>
+<td>Uploading your local commits to GitHub</td>
+</tr>
+<tr class="odd">
+<td><strong>Pull Request (PR)</strong></td>
+<td>A request for the original project owner to review and merge your changes</td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+<section id="step-1-fork-the-repository" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="step-1-fork-the-repository"><span class="header-section-number">3</span> Step 1: Fork the Repository</h2>
+<p>A <strong>fork</strong> creates your own personal copy of someone else’s repository on GitHub. This lets you freely experiment without affecting the original project.</p>
+<p><strong>How to fork:</strong></p>
+<ol type="1">
+<li>Go to the repository page on GitHub (for example: <code>https://github.com/higgi13425/soap_note</code>)</li>
+<li>Click the <strong>Fork</strong> button in the upper-right corner of the page</li>
+<li>GitHub will create a copy of the repository under your own account (e.g., <code>https://github.com/YOUR-USERNAME/soap_note</code>)</li>
+</ol>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://docs.github.com/assets/cb-79331/mw-1440/images/help/repository/fork-button.webp" class="img-fluid figure-img" alt="Screenshot showing the Fork button on a GitHub repository page"></p>
+<figcaption>Click the Fork button to copy the repository to your account</figcaption>
+</figure>
+</div>
+<p>You now have your own independent copy of the project!</p>
+<hr>
+</section>
+<section id="step-2-clone-your-fork-to-your-computer" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="step-2-clone-your-fork-to-your-computer"><span class="header-section-number">4</span> Step 2: Clone Your Fork to Your Computer</h2>
+<p><strong>Cloning</strong> downloads the repository from GitHub to your local machine so you can edit files.</p>
+<p>In RStudio, you can do this easily:</p>
+<ol type="1">
+<li>Click <strong>File → New Project → Version Control → Git</strong></li>
+<li>Paste the URL of <strong>your fork</strong> (not the original) into the “Repository URL” field</li>
+<li>Choose a folder on your computer and click <strong>Create Project</strong></li>
+</ol>
+<p>Or, from the terminal:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/YOUR-USERNAME/soap_note.git</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> soap_note</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Always clone <strong>your fork</strong>, not the original repository. That way your changes stay in your own copy until you’re ready to share them.</p>
+</div>
+</div>
+<hr>
+</section>
+<section id="step-3-create-a-branch" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="step-3-create-a-branch"><span class="header-section-number">5</span> Step 3: Create a Branch</h2>
+<p>A <strong>branch</strong> is like a safe workspace where you can make changes without affecting the main version of the code. It is good practice to always work on a new branch rather than directly on <code>main</code>.</p>
+<p>From the terminal, create and switch to a new branch:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> checkout <span class="at">-b</span> my-new-feature</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This creates a branch called <code>my-new-feature</code> and switches to it right away. You can name your branch anything descriptive — for example, <code>add-plan-section</code> or <code>fix-typo</code>.</p>
+<p>To check which branch you are on:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> branch</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The branch with <code>*</code> next to it is your current branch.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>In RStudio, you can create and switch branches using the <strong>Git pane</strong> in the upper-right panel. Click the branch name dropdown and select <strong>New Branch</strong>.</p>
+</div>
+</div>
+<hr>
+</section>
+<section id="step-4-make-your-changes" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="step-4-make-your-changes"><span class="header-section-number">6</span> Step 4: Make Your Changes</h2>
+<p>Now you can open files in the repository and edit them. For example, you might add text to the SOAP note, fix a typo, or add a new section.</p>
+<p>After editing a file, save it as you normally would.</p>
+<hr>
+</section>
+<section id="step-5-stage-and-commit-your-changes" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="step-5-stage-and-commit-your-changes"><span class="header-section-number">7</span> Step 5: Stage and Commit Your Changes</h2>
+<p>A <strong>commit</strong> saves a snapshot of your changes with a message describing what you did. Before committing, you must <strong>stage</strong> the files you want to include.</p>
+<p>From the terminal:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Stage your changes (add the file to the commit)</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add filename.qmd</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Or stage all changed files at once</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add .</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Commit with a descriptive message</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"Add assessment section to SOAP note"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>In RStudio:</p>
+<ol type="1">
+<li>In the <strong>Git pane</strong>, check the box next to each file you want to stage</li>
+<li>Click <strong>Commit</strong></li>
+<li>Write a short, descriptive commit message</li>
+<li>Click <strong>Commit</strong> again</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Writing Good Commit Messages
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A good commit message briefly explains <em>what</em> you changed and <em>why</em>.</p>
+<p>✅ Good: <code>"Add objective section with vital signs"</code><br>
+❌ Less helpful: <code>"changes"</code> or <code>"stuff"</code></p>
+</div>
+</div>
+<hr>
+</section>
+<section id="step-6-push-your-changes-to-github" class="level2" data-number="8">
+<h2 data-number="8" class="anchored" data-anchor-id="step-6-push-your-changes-to-github"><span class="header-section-number">8</span> Step 6: Push Your Changes to GitHub</h2>
+<p><strong>Pushing</strong> uploads your local commits to your fork on GitHub.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> push origin my-new-feature</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Here, <code>origin</code> refers to your fork on GitHub, and <code>my-new-feature</code> is the name of your branch.</p>
+<p>In RStudio, click the green <strong>Push</strong> arrow in the Git pane.</p>
+<p>After pushing, go to your fork on GitHub — you should see your new branch and a prompt to open a Pull Request.</p>
+<hr>
+</section>
+<section id="step-7-open-a-pull-request" class="level2" data-number="9">
+<h2 data-number="9" class="anchored" data-anchor-id="step-7-open-a-pull-request"><span class="header-section-number">9</span> Step 7: Open a Pull Request</h2>
+<p>A <strong>Pull Request (PR)</strong> is how you propose your changes to the owner of the original repository. It lets them review your changes, leave comments, and ultimately merge your work into the main project.</p>
+<p><strong>How to open a Pull Request:</strong></p>
+<ol type="1">
+<li>Go to your fork on GitHub</li>
+<li>You should see a yellow banner saying <em>“Compare &amp; pull request”</em> — click it</li>
+<li>Make sure the <strong>base repository</strong> is the original (<code>higgi13425/soap_note</code>) and the <strong>base branch</strong> is <code>main</code></li>
+<li>Make sure the <strong>head repository</strong> is your fork and the <strong>compare branch</strong> is <code>my-new-feature</code></li>
+<li>Write a clear title and description explaining what your changes do and why</li>
+<li>Click <strong>Create Pull Request</strong></li>
+</ol>
+<p>The repository owner will be notified and can review your changes, suggest edits, and eventually merge them.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+What Happens After You Submit a PR?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>The owner may <strong>merge</strong> your PR (your changes are added to the main project 🎉)</li>
+<li>The owner may <strong>request changes</strong> (they ask you to fix or improve something before merging)</li>
+<li>The owner may <strong>close</strong> the PR (your changes are not accepted this time)</li>
+</ul>
+<p>If changes are requested, simply make the edits on the same branch, commit, and push — the PR will update automatically.</p>
+</div>
+</div>
+<hr>
+</section>
+<section id="the-full-workflow-at-a-glance" class="level2" data-number="10">
+<h2 data-number="10" class="anchored" data-anchor-id="the-full-workflow-at-a-glance"><span class="header-section-number">10</span> The Full Workflow at a Glance</h2>
+<pre><code>Original Repo (higgi13425/soap_note)
+        │
+        │  Fork
+        ▼
+Your Fork (YOUR-USERNAME/soap_note)  ←── Push
+        │
+        │  Clone
+        ▼
+  Your Computer
+        │
+        │  Create Branch → Edit Files → Commit
+        ▼
+  Your Branch (my-new-feature)
+        │
+        │  Pull Request
+        ▼
+Original Repo (review &amp; merge)</code></pre>
+<hr>
+</section>
+<section id="summary" class="level2" data-number="11">
+<h2 data-number="11" class="anchored" data-anchor-id="summary"><span class="header-section-number">11</span> Summary</h2>
+<p>Here is a quick recap of each step:</p>
+<ol type="1">
+<li><strong>Fork</strong> the repository on GitHub to create your own copy</li>
+<li><strong>Clone</strong> your fork to your local computer</li>
+<li><strong>Create a branch</strong> to isolate your changes</li>
+<li><strong>Edit</strong> the files you want to change</li>
+<li><strong>Stage and commit</strong> your changes with a descriptive message</li>
+<li><strong>Push</strong> your branch back to your fork on GitHub</li>
+<li><strong>Open a Pull Request</strong> to propose your changes to the original repository</li>
+</ol>
+<p>That’s it! With practice, this workflow will become second nature. It is the same process used by millions of developers and data scientists around the world to collaborate on projects of all sizes.</p>
+<hr>
+</section>
+<section id="practice-try-it-yourself" class="level2" data-number="12">
+<h2 data-number="12" class="anchored" data-anchor-id="practice-try-it-yourself"><span class="header-section-number">12</span> Practice: Try It Yourself</h2>
+<p>Now it’s your turn! Try the following exercise using this repository (<code>higgi13425/soap_note</code>):</p>
+<ol type="1">
+<li>Fork this repository to your own GitHub account</li>
+<li>Clone your fork to your computer</li>
+<li>Create a branch called <code>add-my-note</code></li>
+<li>Open the SOAP note file and add something to the <strong>Subjective</strong> section</li>
+<li>Commit your change with the message: <code>"Add subjective note"</code></li>
+<li>Push your branch to GitHub</li>
+<li>Open a Pull Request back to the original repository</li>
+</ol>
+<p>Good luck and happy collaborating! 🎉</p>
+<hr>
+</section>
+<section id="additional-resources" class="level2" data-number="13">
+<h2 data-number="13" class="anchored" data-anchor-id="additional-resources"><span class="header-section-number">13</span> Additional Resources</h2>
+<ul>
+<li><a href="https://happygitwithr.com/">Happy Git with R</a> — an excellent guide for using Git with R and RStudio</li>
+<li><a href="https://docs.github.com/en/get-started/quickstart/fork-a-repo">GitHub Docs: Fork a repo</a></li>
+<li><a href="https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request">GitHub Docs: Creating a pull request</a></li>
+<li><a href="https://education.github.com/git-cheat-sheet-education.pdf">Git cheat sheet (PDF)</a></li>
+</ul>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
